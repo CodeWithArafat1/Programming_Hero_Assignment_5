@@ -19,18 +19,20 @@ let loveCount = 0;
       loveCount++;
       loveUpdate.textContent = loveCount;
     } else if (getClass(e, "call")) {
-      const title = card.querySelector(".title").textContent;
+      const title = card.querySelector(".sub-title").textContent;
       const number = card.querySelector(".phone-number").textContent;
 
       const callCost = 20;
       let currentCradit = Number(cradit.textContent);
-      if (currentCradit <= 0) {
-        alert(`Your cradit is finsished`);
+      if (currentCradit < 20) {
+        alert(
+          `You don't have enough coins. You need at least 20 coins to make a call.`
+        );
         return;
       }
       currentCradit -= callCost;
       cradit.textContent = currentCradit;
-      alert(`${title}, ${number}`);
+      alert(`📞 Calling ${title}, ${number}`);
       noHistory.innerHTML = "";
       historyCreate(title, number, getTime());
     }
@@ -39,8 +41,8 @@ let loveCount = 0;
 
 clearHitory.addEventListener("click", function () {
   historyContainer.innerHTML = "";
-  noHistory.textContent = 'No history'
-  historyContainer.appendChild(noHistory)
+  noHistory.textContent = "No history";
+  historyContainer.appendChild(noHistory);
 });
 
 // find class
