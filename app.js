@@ -13,26 +13,26 @@ let loveCount = 0;
     if (getClass(e, "copyBtn")) {
       const number = card.querySelector(".phone-number").textContent;
       navigator.clipboard.writeText(number);
+      alert(`নাম্বার কপি হয়েছে, ${number}`);
       copyCount++;
       copyUpdate.textContent = copyCount;
     } else if (getClass(e, "love")) {
       loveCount++;
       loveUpdate.textContent = loveCount;
     } else if (getClass(e, "call")) {
-      const title = card.querySelector(".sub-title").textContent;
+      const subTitle = card.querySelector(".sub-title").textContent;
+      const title = card.querySelector(".title").textContent;
       const number = card.querySelector(".phone-number").textContent;
 
       const callCost = 20;
       let currentCradit = Number(cradit.textContent);
       if (currentCradit < 20) {
-        alert(
-          `You don't have enough coins. You need at least 20 coins to make a call.`
-        );
+        alert(`আপনার পর্যাপ্ত কয়েন নেই কল করতে কমপক্ষে ২০ কয়েন লাগবে.`);
         return;
       }
       currentCradit -= callCost;
       cradit.textContent = currentCradit;
-      alert(`📞 Calling ${title}, ${number}`);
+      alert(`📞 Calling ${subTitle}, ${number}`);
       noHistory.innerHTML = "";
       historyCreate(title, number, getTime());
     }
@@ -75,7 +75,10 @@ function getTime() {
   let h = date.getHours();
   let hour12 = h % 12;
   hour12 = hour12 === 0 ? 12 : hour12;
-  let m = date.getMinutes();
-  let s = date.getSeconds();
-  return `${hour12}:${m}:${s}`;
+
+  let hh = hour12.toString().padStart(2, "0");
+  let m = date.getMinutes().toString().padStart(2, "0");
+  let s = date.getSeconds().toString().padStart(2, "0");
+
+  return `${hh}:${m}:${s}`;
 }
